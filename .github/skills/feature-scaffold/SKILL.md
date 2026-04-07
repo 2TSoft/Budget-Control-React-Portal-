@@ -1,84 +1,165 @@
 ---
 name: feature-scaffold
 description: "Scaffold một feature module hoàn chỉnh cho React SPA từ Dataverse entity. Sử dụng khi cần tạo toàn bộ files cho một feature mới: types, API, hooks, components (List, Form, View)."
-argument-hint: "Tên feature module cần tạo, ví dụ: purchase-requisition, department, approval-matrix"
+argument-hint: "Tên feature module cần tạo, ví dụ: department, approval-matrix, contact, company"
 ---
 
 # Feature Module Scaffolding
 
 ## Khi nào sử dụng
 - Tạo feature module mới cho một Dataverse entity
-- Migrate một module từ Power Pages sang React
 - Cần tạo đầy đủ: types, API endpoints, hooks, components
+- Áp dụng cho Phase 2+ modules
 
 ## Quy trình
 
 ### Bước 1: Thu thập thông tin
-1. Đọc form YAML configs trong `purchaserequisition---site-q342v2/basic-forms/` để biết fields
-2. Đọc list YAML configs trong `purchaserequisition---site-q342v2/lists/` để biết columns, actions
-3. Xem table permissions để biết access control
-4. Xem `docs/migration-plan.md` để biết Cloud Flow IDs
+1. Xem `docs/2-FEATURES.md` để biết entity, routes, roles
+2. Xem `docs/1-ARCHITECTURE.md` để hiểu patterns
+3. Xem `src/shared/utils/constants.ts` để biết entity API path (DATAVERSE_ENTITIES)
+4. Tham chiếu `src/features/purchase-requisition/` làm mẫu chuẩn
 
 ### Bước 2: Tạo TypeScript Types
 Tạo file `src/features/<module>/types.ts`:
-- Interface cho entity (read model)
-- Interface cho create/update payload (write model)
-- Enum cho status/option fields
-- Zod schema cho form validation
+
+```typescript
+import type { DataverseBaseEntity } from '../../types/dataverse';
+import { z } from 'zod';
+
+// Const object cho option sets (KHÔNG dùng enum)
+export const EntityStatus = { Active: 1, Inactive: 2 } as const;
+export type EntityStatus = (typeof EntityStatus)[keyof typeof EntityStatus];
+
+// Read model
+export interface Entity extends DataverseBaseEntity {
+  entity_entityid: string;
+  entity_name: string;
+  // Lookups: _fieldname_value, _fieldname_value_Formatted
+}
+
+// Write model (lookups dùng @odata.bind)
+export interface CreateEntity {
+  entity_name: string;
+  'entity_lookupid@odata.bind'?: string;  // "/related_entities(guid)"
+}
+
+// Update model
+export type UpdateEntity = Partial<CreateEntity>;
+
+// Zod schema
+export const entitySchema = z.object({
+  entity_name: z.string().min(1, 'Tên là bắt buộc'),
+});
+export type EntityFormData = z.infer<typeof entitySchema>;
+```
 
 ### Bước 3: Tạo API Endpoints
 Tạo file `src/api/endpoints/<entity>.ts`:
-- CRUD functions sử dụng `dataverseClient`
-- Cloud Flow trigger functions nếu cần
-- OData query params support
+
+```typescript
+import dataverseClient from '../dataverse-client';
+import { DATAVERSE_ENTITIES } from '../../shared/utils/constants';
+import type { ODataParams, ODataResponse } from '../../types/dataverse';
+import type { Entity, CreateEntity, UpdateEntity } from '../../features/<module>/types';
+
+const ENTITY_PATH = DATAVERSE_ENTITIES.<entityKey>;
+
+export const entityApi = {
+  list: (params?: ODataParams) =>
+    dataverseClient.get<ODataResponse<Entity>>(ENTITY_PATH, { params: { $count: true, ...params } }).then(r => r.data),
+  get: (id: string, params?: Pick<ODataParams, '$select' | '$expand'>) =>
+    dataverseClient.get<Entity>(`${ENTITY_PATH}(${id})`, { params }).then(r => r.data),
+  create: (data: CreateEntity) =>
+    dataverseClient.post<Entity>(ENTITY_PATH, data).then(r => r.data),
+  update: (id: string, data: UpdateEntity) =>
+    dataverseClient.patch(`${ENTITY_PATH}(${id})`, data),
+  delete: (id: string) =>
+    dataverseClient.delete(`${ENTITY_PATH}(${id})`),
+};
+```
 
 ### Bước 4: Tạo Hooks
 Tạo file `src/features/<module>/hooks/use<Name>.ts`:
-- `useQuery` cho list/get operations
-- `useMutation` cho create/update/delete
-- Custom hooks cho Cloud Flow operations (approval, budget check...)
+
+```typescript
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { entityApi } from '../../../api/endpoints/<entity>';
+import { DEFAULT_PAGE_SIZE } from '../../../shared/utils/constants';
+import type { ODataParams } from '../../../types/dataverse';
+import type { CreateEntity, UpdateEntity } from '../types';
+
+export function useEntities(params?: ODataParams) {
+  return useQuery({
+    queryKey: ['entities', params],
+    queryFn: () => entityApi.list({ $orderby: 'createdon desc', $top: DEFAULT_PAGE_SIZE, ...params }),
+  });
+}
+
+export function useEntity(id: string | undefined) {
+  return useQuery({
+    queryKey: ['entity', id],
+    queryFn: () => entityApi.get(id!),
+    enabled: !!id,
+  });
+}
+
+export function useCreateEntity() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CreateEntity) => entityApi.create(data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['entities'] }),
+  });
+}
+
+export function useUpdateEntity() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateEntity }) => entityApi.update(id, data),
+    onSuccess: (_r, { id }) => {
+      qc.invalidateQueries({ queryKey: ['entities'] });
+      qc.invalidateQueries({ queryKey: ['entity', id] });
+    },
+  });
+}
+
+export function useDeleteEntity() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => entityApi.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['entities'] }),
+  });
+}
+```
 
 ### Bước 5: Tạo Components
+- `<Name>ListPage.tsx` — Ant Design Table + search + pagination + actions
+- `<Name>FormPage.tsx` — React Hook Form + Zod, support create & edit mode
+- `<Name>ViewPage.tsx` — Ant Design Descriptions + action buttons
 
-#### List Component (`<Name>List.tsx`)
-- Sử dụng shared DataTable
-- Search, pagination, sorting
-- Row actions (View, Edit, Delete)
-- Create button
-- Map từ Entity List config
-
-#### Form Component (`<Name>Form.tsx`)
-- React Hook Form + Zod validation
-- Support cả create và edit mode
-- Lookup fields → Select/Autocomplete
-- File attachments nếu cần
-- Map từ Basic Form config
-
-#### View Component (`<Name>View.tsx`)
-- Read-only display
-- Related data sections
-- Action buttons (Edit, Back)
-- Map từ Basic Form (Read) config
-
-### Bước 6: Tạo barrel exports
-Tạo file `src/features/<module>/index.ts`
+### Bước 6: Tạo barrel exports + Router + Sidebar
+- Tạo `src/features/<module>/index.ts`
+- Thêm lazy-loaded routes vào `src/app/router.tsx`
+- Thêm menu item vào `src/shared/components/Layout/Sidebar.tsx`
 
 ## Template cấu trúc output
 
 ```
 src/features/<module-name>/
 ├── components/
-│   ├── <Name>List.tsx
-│   ├── <Name>Form.tsx    
-│   └── <Name>View.tsx    
+│   ├── <Name>ListPage.tsx
+│   ├── <Name>FormPage.tsx
+│   └── <Name>ViewPage.tsx
 ├── hooks/
 │   └── use<Name>.ts
 ├── types.ts
 └── index.ts
+
+src/api/endpoints/
+└── <entity>.ts
 ```
 
 ## Tham khảo
-- Migration Plan: `docs/migration-plan.md`
-- React Component Standards: `.github/instructions/react-components.instructions.md`
-- Dataverse API Standards: `.github/instructions/dataverse-api.instructions.md`
-- Power Pages source: `purchaserequisition---site-q342v2/`
+- **Mẫu chuẩn (Phase 1):** `src/features/purchase-requisition/` — full implementation
+- **Feature details:** `docs/2-FEATURES.md`
+- **Architecture:** `docs/1-ARCHITECTURE.md`
+- **Contributing:** `docs/4-CONTRIBUTING.md`

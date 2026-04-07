@@ -14,6 +14,7 @@ const dataverseClient = axios.create({
   baseURL: '/_api/',
   headers: { 'Content-Type': 'application/json' },
 });
+// Interceptor auto-inject Bearer token từ AuthProvider
 ```
 
 ## Entity API Endpoints
@@ -28,8 +29,48 @@ const dataverseClient = axios.create({
 | Approval Matrix | `balas_approvalmatrixes` | Có |
 | Service Category | `balas_servicecategories` | Có |
 | Dimension Value | `balas_dimensionvalues` | Có |
-| Company | `bcbi_companies` | Không |
+| Company | `bcbi_companies` | **Không** |
 | Site Config | `balas_siteconfigurations` | Có |
+
+## API Object Pattern (Established)
+
+Mỗi entity tạo 1 file tại `src/api/endpoints/<entity>.ts`, export 1 const object:
+
+```typescript
+import dataverseClient from '../dataverse-client';
+import { DATAVERSE_ENTITIES } from '../../shared/utils/constants';
+import type { ODataParams, ODataResponse } from '../../types/dataverse';
+import type { Entity, CreateEntity, UpdateEntity } from '../../features/<module>/types';
+
+const ENTITY_PATH = DATAVERSE_ENTITIES.<entityKey>;
+
+export const entityApi = {
+  list: (params?: ODataParams) =>
+    dataverseClient
+      .get<ODataResponse<Entity>>(ENTITY_PATH, { params: { $count: true, ...params } })
+      .then((r) => r.data),
+
+  get: (id: string, params?: Pick<ODataParams, '$select' | '$expand'>) =>
+    dataverseClient
+      .get<Entity>(`${ENTITY_PATH}(${id})`, { params })
+      .then((r) => r.data),
+
+  create: (data: CreateEntity) =>
+    dataverseClient
+      .post<Entity>(ENTITY_PATH, data)
+      .then((r) => r.data),
+
+  update: (id: string, data: UpdateEntity) =>
+    dataverseClient.patch(`${ENTITY_PATH}(${id})`, data),
+
+  delete: (id: string) =>
+    dataverseClient.delete(`${ENTITY_PATH}(${id})`),
+};
+```
+
+### Ví dụ thực tế: `prHeaderApi` và `prLineApi`
+
+Xem `src/api/endpoints/purchase-requisition.ts` — pattern chuẩn đã implement.
 
 ## CRUD Operations
 
@@ -61,7 +102,7 @@ async function triggerCloudFlow(flowId: string, payload: unknown) {
 }
 ```
 
-### Flow IDs (từ Power Pages config)
+### Flow IDs (từ `src/shared/utils/constants.ts`)
 
 ```tsx
 export const CLOUD_FLOWS = {
@@ -82,23 +123,62 @@ export const CLOUD_FLOWS = {
 } as const;
 ```
 
-## TanStack Query Hooks Pattern
+## TanStack Query Hooks Pattern (Established)
 
-```tsx
-// src/features/purchase-requisition/hooks/usePurchaseRequisitions.ts
-export function usePurchaseRequisitions(filters?: PRFilters) {
+```typescript
+// Queries — tên: use + Noun
+export function useEntities(params?: ODataParams) {
   return useQuery({
-    queryKey: ['purchaseRequisitions', filters],
-    queryFn: () => fetchPRHeaders(filters),
+    queryKey: ['entities', params],
+    queryFn: () => entityApi.list({ $orderby: 'createdon desc', $top: DEFAULT_PAGE_SIZE, ...params }),
   });
 }
 
-export function useCreatePR() {
-  const queryClient = useQueryClient();
+export function useEntity(id: string | undefined) {
+  return useQuery({
+    queryKey: ['entity', id],
+    queryFn: () => entityApi.get(id!),
+    enabled: !!id,
+  });
+}
+
+// Mutations — tên: use + Verb + Noun
+export function useCreateEntity() {
+  const qc = useQueryClient();
   return useMutation({
-    mutationFn: createPRHeader,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['purchaseRequisitions'] });
+    mutationFn: (data: CreateEntity) => entityApi.create(data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['entities'] }),
+  });
+}
+
+export function useUpdateEntity() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateEntity }) => entityApi.update(id, data),
+    onSuccess: (_r, { id }) => {
+      qc.invalidateQueries({ queryKey: ['entities'] });
+      qc.invalidateQueries({ queryKey: ['entity', id] });
+    },
+  });
+}
+
+export function useDeleteEntity() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => entityApi.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['entities'] }),
+  });
+}
+
+// Cloud Flow Action Pattern
+function useEntityCloudFlowAction(flowKey: keyof typeof CLOUD_FLOWS) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: { id: string; reason?: string }) =>
+      triggerCloudFlow(CLOUD_FLOWS[flowKey], payload),
+    onSuccess: (_r, { id }) => {
+      qc.invalidateQueries({ queryKey: ['entities'] });
+      qc.invalidateQueries({ queryKey: ['entity', id] });
     },
   });
 }
@@ -109,8 +189,16 @@ export function useCreatePR() {
 Lookup fields trong Dataverse dùng `_fieldname_value` cho read, `fieldname@odata.bind` cho write:
 
 ```tsx
-// Read: _balas_departmentid_value
-// Write: "balas_departmentid@odata.bind": "/balas_departments(guid)"
+// Read model
+interface Entity extends DataverseBaseEntity {
+  _balas_departmentid_value?: string;
+  _balas_departmentid_value_Formatted?: string;  // Display name
+}
+
+// Write model
+interface CreateEntity {
+  'balas_departmentid@odata.bind'?: string;  // "/balas_departments(guid)"
+}
 ```
 
 ## Pagination
@@ -124,8 +212,9 @@ const response = await dataverseClient.get(url, {
 // Next page: response.data['@odata.nextLink']
 ```
 
-## Default Currency
+## Default Constants
 
 ```tsx
 export const DEFAULT_CURRENCY_ID = '398c296f-7437-f011-b4cd-6045bd599c55';
+export const DEFAULT_PAGE_SIZE = 20;
 ```

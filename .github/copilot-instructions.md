@@ -7,58 +7,18 @@
 - **Framework**: React 19 + Vite 8
 - **Publisher**: Balas Technologies Co., Ltd.
 
-## Kiến trúc
+## Tài liệu chi tiết
 
-```
-Business Central <--API--> Dataverse <--Web API--> React SPA <--UI--> User
-```
+Tất cả nội dung kiến trúc, patterns, coding standards, Dataverse tables đã được diễn giải chi tiết trong `docs/`:
 
-- Backend: Dataverse Web API (`/_api/`) + Power Automate Cloud Flow (`/_api/cloudflow/v1.0/trigger/`)
-- Frontend: React SPA với feature-based architecture
-- Auth: Azure AD via MSAL.js v3
+| File | Nội Dung |
+|------|----------|
+| [docs/0-README.md](../docs/0-README.md) | Tổng quan dự án, tech stack, quick start |
+| [docs/1-ARCHITECTURE.md](../docs/1-ARCHITECTURE.md) | Kiến trúc, provider tree, auth flow, API layer, state management, routing, Dataverse tables, Cloud Flows, RBAC |
+| [docs/2-FEATURES.md](../docs/2-FEATURES.md) | Tính năng & modules (PR, Budget, Department, Approval Matrix...) |
+| [docs/3-SETUP.md](../docs/3-SETUP.md) | Hướng dẫn cài đặt, env config, dev proxy, troubleshooting |
+| [docs/4-CONTRIBUTING.md](../docs/4-CONTRIBUTING.md) | Coding standards, naming conventions, established patterns (API, hooks, types, Zod), commit convention |
+| [docs/5-ROADMAP.md](../docs/5-ROADMAP.md) | Lộ trình Phase 0–4, checklist từng module |
+| [docs/6-DEPLOYMENT.md](../docs/6-DEPLOYMENT.md) | Build, deploy lên Power Pages, checklist |
 
-## Cấu trúc thư mục
-
-```
-src/
-├── app/          # App config, router, providers
-├── auth/         # MSAL authentication
-├── api/          # Dataverse & CloudFlow clients  
-├── features/     # Feature modules (PR, Budget, Department...)
-├── shared/       # Shared components, hooks, utils
-├── types/        # Global TypeScript types
-└── styles/       # Theme & global styles
-```
-
-## Coding Standards
-
-- Sử dụng functional components + hooks
-- State management: TanStack Query cho server state, React Context cho app state
-- Forms: React Hook Form + Zod validation
-- Naming: PascalCase cho components, camelCase cho functions/variables
-- Mỗi feature module tự chứa: components/, hooks/, types.ts, index.ts
-- Export public API qua index.ts barrel files
-- Không dùng `any` - luôn define proper TypeScript types
-
-## Commit Convention
-
-```
-<type>(<scope>): <subject>
-```
-
-Types: feat, fix, docs, style, refactor, test, chore
-
-## Dataverse Tables
-
-| Table | Prefix | Purpose |
-|-------|--------|---------|
-| balas_purchaserequisitionheader | PR | Purchase Requisition |
-| balas_purchaserequisitionline | PR | PR Line Items |
-| balas_department | Master | Departments |
-| balas_approvalmatrix | Master | Approval Matrix |
-| balas_servicecategory | Master | Service Categories |
-| balas_dimensionvalue | Master | Dimension Values |
-| balas_siteconfiguration | Config | Site Settings |
-| bcbi_company | Master | Companies |
-| contact | User | Contacts/Users |
-| account | Master | Vendors |
+**Luôn đọc docs trước khi generate code** — đặc biệt `4-CONTRIBUTING.md` (patterns) và `1-ARCHITECTURE.md` (cấu trúc).

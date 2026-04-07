@@ -11,7 +11,7 @@
 - `index.html` — powerpages-spa (~98 tok)
 - `package-lock.json` — npm lock file (~45544 tok)
 - `package.json` — Node.js package manifest (~332 tok)
-- `README.md` — Project documentation (~607 tok)
+- `README.md` — Budget Control Portal: tổng quan, tech stack, quick start, docs links (~550 tok)
 - `tsconfig.app.json` (~235 tok)
 - `tsconfig.json` — TypeScript configuration (~34 tok)
 - `tsconfig.node.json` (~187 tok)
@@ -37,9 +37,10 @@
 ## .github/instructions/
 
 - `auth.instructions.md` — Authentication & Authorization (~416 tok)
-- `dataverse-api.instructions.md` — Dataverse API Standards (~977 tok)
+- `dataverse-api.instructions.md` — Dataverse API Standards: CRUD pattern, hooks, lookup fields, Cloud Flow (~1800 tok)
+- `phase2-master-data.instructions.md` — Phase 2 Master Data modules: Department, Approval Matrix, Contact, Company (~700 tok)
 - `power-pages-reference.instructions.md` — Power Pages Reference (~337 tok)
-- `react-components.instructions.md` — React Component Standards (~552 tok)
+- `react-components.instructions.md` — React Component Standards: List/Form/View patterns (~1200 tok)
 
 ## .github/skills/feature-scaffold/
 
@@ -462,8 +463,13 @@
 
 ## docs/
 
-- `migration-plan.md` — Kế Hoạch Nâng Cấp Budget Control Portal: Power Pages → React SPA (~2584 tok)
-- `readme.md` — Balas Purchase Requisiton Portal (~277 tok)
+- `0-README.md` — Tổng quan dự án: kiến trúc, tech stack, quick start, links (~600 tok)
+- `1-ARCHITECTURE.md` — Kiến trúc chi tiết: provider tree, auth flow, API layer, state management, routing (~1800 tok)
+- `2-FEATURES.md` — Tính năng & modules: PR, Budget, Department, Approval Matrix, Contact... (~1100 tok)
+- `3-SETUP.md` — Hướng dẫn cài đặt, chạy dev, env config, troubleshooting (~850 tok)
+- `4-CONTRIBUTING.md` — Quy tắc đóng góp: coding standards, naming, patterns, commit convention (~1100 tok)
+- `5-ROADMAP.md` — Lộ trình phát triển: Phase 0-4, chi tiết tasks cho Phase 2 (~1050 tok)
+- `6-DEPLOYMENT.md` — Build & deploy: production build, Power Pages upload, checklist (~700 tok)
 
 ## src/
 

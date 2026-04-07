@@ -1,73 +1,63 @@
-# React + TypeScript + Vite
+# Budget Control Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Publisher:** Balas Technologies Co., Ltd.
 
-Currently, two official plugins are available:
+Ứng dụng React SPA quản lý yêu cầu mua hàng (Purchase Requisition) và kiểm soát ngân sách, tích hợp Dynamics 365 Business Central qua Dataverse Web API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Kiến Trúc
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+Business Central ←— API —→ Dataverse ←— Web API —→ React SPA ←— UI —→ User
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+React 19 · Vite 8 · TypeScript 5.9 · TanStack Query 5 · Ant Design 6 · React Hook Form + Zod · MSAL.js (Azure AD) · Axios
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quick Start
+
+```bash
+npm install
+cp .env.example .env   # Cập nhật Azure AD credentials
+npm run dev             # http://localhost:5173
 ```
+
+## Scripts
+
+| Script | Mô Tả |
+|--------|--------|
+| `npm run dev` | Vite dev server (proxy `/_api` → Power Pages portal) |
+| `npm run build` | TypeScript check + production build |
+| `npm run lint` | ESLint |
+| `npm run preview` | Preview production build |
+
+## Deployment
+
+```bash
+npm run build
+pac pages upload-code-site --rootpath .powerpages-site --compiledPath ./dist --siteName "Budget Control Portal"
+```
+
+## Tài Liệu Chi Tiết
+
+| # | File | Nội Dung |
+|---|------|----------|
+| 0 | [docs/0-README.md](docs/0-README.md) | Tổng quan dự án |
+| 1 | [docs/1-ARCHITECTURE.md](docs/1-ARCHITECTURE.md) | Kiến trúc hệ thống |
+| 2 | [docs/2-FEATURES.md](docs/2-FEATURES.md) | Tính năng & modules |
+| 3 | [docs/3-SETUP.md](docs/3-SETUP.md) | Hướng dẫn cài đặt |
+| 4 | [docs/4-CONTRIBUTING.md](docs/4-CONTRIBUTING.md) | Quy tắc đóng góp |
+| 5 | [docs/5-ROADMAP.md](docs/5-ROADMAP.md) | Lộ trình phát triển |
+| 6 | [docs/6-DEPLOYMENT.md](docs/6-DEPLOYMENT.md) | Build & deployment |
+
+## Tiến Độ
+
+- ✅ Phase 0: Foundation (project structure, auth, API clients, layout)
+- ✅ Phase 1: Purchase Requisition (CRUD + approval workflow)
+- 🔲 Phase 2: Master Data (Department, Approval Matrix, Contact, Company)
+- 🔲 Phase 3: Supporting Features (Service Category, Vendor, Reports, Site Config)
+- 🔲 Phase 4: Polish & Deploy (responsive, i18n, testing, CI/CD)
+
+## License
+
+© 2026 Balas Technologies Co., Ltd. All rights reserved.

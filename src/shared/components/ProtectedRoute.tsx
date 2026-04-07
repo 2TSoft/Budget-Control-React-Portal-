@@ -3,10 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Spin } from 'antd';
-import { useAuth } from '../../auth/AuthProvider';
+import { useAuth } from '../../auth/useAuth';
 import type { AppRole } from '../../types/auth';
 import type { ReactNode } from 'react';
-import { dataverseLoginRequest } from '../../auth/msal-config';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -18,14 +17,14 @@ export function ProtectedRoute({ children, roles }: ProtectedRouteProps) {
   const isAuthenticated = useIsAuthenticated();
   const { isLoading, hasRole } = useAuth();
 
-  // Chỉ redirect khi chắc chắn chưa đăng nhập và MSAL không đang xử lý gì
+  // Redirect đăng nhập nếu chưa authenticated
+  // Chỉ cần openid scope — API calls dùng Power Pages session cookie
   useEffect(() => {
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
-      instance.loginRedirect(dataverseLoginRequest);
+      instance.loginRedirect({ scopes: ['openid', 'profile'] });
     }
   }, [isAuthenticated, inProgress, instance]);
 
-  // Đang xử lý redirect callback hoặc auth state đang load
   if (isLoading || inProgress !== InteractionStatus.None) {
     return <Spin size="large" fullscreen tip="Đang xác thực..." />;
   }

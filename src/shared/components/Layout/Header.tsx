@@ -1,6 +1,6 @@
 import { Layout, Button, Avatar, Dropdown, Space, Typography, type MenuProps } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useAuth } from '../../../auth/AuthProvider';
+import { useAuth } from '../../../auth/useAuth';
 
 const { Header } = Layout;
 

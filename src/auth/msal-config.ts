@@ -1,4 +1,4 @@
-import type { Configuration, PopupRequest } from '@azure/msal-browser';
+import type { Configuration } from '@azure/msal-browser';
 
 export const msalConfig: Configuration = {
   auth: {
@@ -8,14 +8,7 @@ export const msalConfig: Configuration = {
     postLogoutRedirectUri: window.location.origin,
   },
   cache: {
-    cacheLocation: 'localStorage',
+    // sessionStorage khuyến nghị cho SPA — an toàn hơn localStorage với XSS
+    cacheLocation: 'sessionStorage',
   },
-};
-
-// Scopes để lấy token truy cập Dataverse
-// Yêu cầu: App Registration phải có API permission Dynamics CRM → user_impersonation
-export const dataverseLoginRequest: PopupRequest = {
-  scopes: [
-    `${import.meta.env.VITE_DATAVERSE_URL as string}/user_impersonation`,
-  ],
 };

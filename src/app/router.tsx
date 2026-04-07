@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createHashRouter, Navigate } from 'react-router-dom';
 import { AppLayout } from '../shared/components/Layout/AppLayout';
 import { ProtectedRoute } from '../shared/components/ProtectedRoute';
 
@@ -10,7 +10,9 @@ const PRFormPage = lazy(() => import('../features/purchase-requisition/component
 const PRViewPage = lazy(() => import('../features/purchase-requisition/components/PRViewPage'));
 const NotFoundPage = lazy(() => import('../shared/components/NotFoundPage'));
 
-export const router = createBrowserRouter([
+// HashRouter vì Power Pages không hỗ trợ server-side URL rewrite.
+// Tất cả routes sẽ dùng /#/ prefix (ví dụ: /#/purchase-requisitions).
+export const router = createHashRouter([
   {
     path: '/',
     element: (

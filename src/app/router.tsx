@@ -5,9 +5,13 @@ import { ProtectedRoute } from '../shared/components/ProtectedRoute';
 // Lazy load pages để tối ưu bundle size
 import { lazy } from 'react';
 
+// eslint-disable-next-line react-refresh/only-export-components
 const PRListPage = lazy(() => import('../features/purchase-requisition/components/PRListPage'));
+// eslint-disable-next-line react-refresh/only-export-components
 const PRFormPage = lazy(() => import('../features/purchase-requisition/components/PRFormPage'));
+// eslint-disable-next-line react-refresh/only-export-components
 const PRViewPage = lazy(() => import('../features/purchase-requisition/components/PRViewPage'));
+// eslint-disable-next-line react-refresh/only-export-components
 const NotFoundPage = lazy(() => import('../shared/components/NotFoundPage'));
 
 // HashRouter vì Power Pages không hỗ trợ server-side URL rewrite.

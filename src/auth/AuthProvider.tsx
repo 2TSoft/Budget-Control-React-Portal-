@@ -1,23 +1,14 @@
-import { createContext, useMemo, type ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
-import type { AppUser, AppRole } from '../types/auth';
-
-export interface AuthContextValue {
-  user: AppUser | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  hasRole: (role: AppRole | AppRole[]) => boolean;
-  logout: () => void;
-}
-
-export const AuthContext = createContext<AuthContextValue | null>(null);
+import type { AppRole } from '../types/auth';
+import { AuthContext } from './AuthContext';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { instance, accounts, inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
 
   // Derive user trực tiếp từ accounts — không cần useEffect + setState
-  const user = useMemo<AppUser | null>(() => {
+  const user = useMemo(() => {
     if (!isAuthenticated || accounts.length === 0) return null;
     const account = accounts[0];
     const claims = account.idTokenClaims as Record<string, unknown> | undefined;

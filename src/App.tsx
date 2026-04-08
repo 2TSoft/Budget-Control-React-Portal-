@@ -1,5 +1,6 @@
 import { HashRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import reactLogo from './assets/react.svg';
+import { AuthButton } from './shared/components/AuthButton';
 
 import './App.css';
 import Home from './pages/Home';
@@ -26,6 +27,7 @@ function App() {
               <NavLink to="/budget">Budget</NavLink>
               <NavLink to="/department">Department</NavLink>
             </nav>
+            <AuthButton />
           </div>
         </header>
         <main className="main-content">

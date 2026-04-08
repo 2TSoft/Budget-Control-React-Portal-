@@ -1,0 +1,64 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: var(--bento-radius-full);
+    font-size: var(--bento-text-xs);
+    font-weight: var(--bento-weight-semibold);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--bento-radius-full);
+    flex-shrink: 0;
+}
+
+/* ─── Status Variants ────────────────────────────────────── */
+.draft {
+    background-color: var(--bento-bg);
+    color: var(--bento-text-secondary);
+}
+
+.draft .dot {
+    background-color: var(--bento-text-tertiary);
+}
+
+.pending {
+    background-color: var(--bento-warning-bg);
+    color: #B45309;
+}
+
+.pending .dot {
+    background-color: var(--bento-warning);
+}
+
+.approved {
+    background-color: var(--bento-success-bg);
+    color: #15803D;
+}
+
+.approved .dot {
+    background-color: var(--bento-success);
+}
+
+.rejected {
+    background-color: var(--bento-error-bg);
+    color: #DC2626;
+}
+
+.rejected .dot {
+    background-color: var(--bento-error);
+}
+
+.cancelled {
+    background-color: var(--bento-bg);
+    color: var(--bento-text-tertiary);
+}
+
+.cancelled .dot {
+    background-color: var(--bento-border);
+}

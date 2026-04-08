@@ -24,7 +24,7 @@ declare global {
   }
 }
 
-const TENANT_ID = import.meta.env.VITE_TENANT_ID as string | undefined;
+const TENANT_ID = import.meta.env.VITE_AZURE_TENANT_ID as string | undefined;
 
 function getInitials(firstName: string, lastName: string): string {
   return `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase();
@@ -45,11 +45,16 @@ export function AuthButton() {
 
   // Lấy antiforgery token từ Power Pages shell để dùng cho POST login
   useEffect(() => {
+    const domToken = document.querySelector<HTMLInputElement>(
+      'input[name="__RequestVerificationToken"]'
+    )?.value;
+    if (domToken) {
+      setToken(domToken);
+      return;
+    }
     window.shell?.getTokenDeferred()
-      .then(setToken)
-      .catch(() => {
-        // Bỏ qua nếu shell chưa sẵn sàng
-      });
+      .then((t: string) => setToken(t))
+      .catch(() => { });
   }, []);
 
   // Đóng dropdown khi click bên ngoài
@@ -86,17 +91,17 @@ export function AuthButton() {
           {TENANT_ID && (
             <input name="provider" type="hidden" value={`https://login.windows.net/${TENANT_ID}/`} />
           )}
-          <input name="returnurl" type="hidden" value={window.location.pathname + window.location.search + window.location.hash} />
+          <input name="returnurl" type="hidden" value="/" />
         </form>
         <button className="auth-login-btn" onClick={handleLogin} type="button">
-        <span className="auth-login-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-            <polyline points="10 17 15 12 10 7" />
-            <line x1="15" y1="12" x2="3" y2="12" />
-          </svg>
-        </span>
-        Đăng nhập
+          <span className="auth-login-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+              <polyline points="10 17 15 12 10 7" />
+              <line x1="15" y1="12" x2="3" y2="12" />
+            </svg>
+          </span>
+          Đăng nhập
         </button>
       </>
     );

@@ -1,0 +1,72 @@
+.shell {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bento-bg);
+}
+
+/* ─── Sidebar ────────────────────────────────────────────── */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: var(--bento-z-sidebar);
+    background: var(--bento-bg-sidebar);
+    border-right: 1px solid var(--bento-border-light);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ─── Main area (chiếm phần còn lại) ────────────────────── */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left var(--bento-duration-slow) var(--bento-ease);
+}
+
+.mainExpanded {
+    margin-left: var(--bento-sidebar-width);
+}
+
+.mainCollapsed {
+    margin-left: var(--bento-sidebar-collapsed);
+}
+
+/* ─── Content area ───────────────────────────────────────── */
+.content {
+    flex: 1;
+    padding: var(--bento-space-6);
+    overflow-y: auto;
+}
+
+/* ─── Mobile Overlay ─────────────────────────────────────── */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bento-bg-overlay);
+    z-index: calc(var(--bento-z-sidebar) - 1);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    .mainExpanded,
+    .mainCollapsed {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebarMobileOpen {
+        transform: translateX(0);
+    }
+
+    .content {
+        padding: var(--bento-space-4);
+    }
+}

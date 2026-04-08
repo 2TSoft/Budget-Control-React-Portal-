@@ -1,0 +1,158 @@
+/**
+ * Bento Design System — Design Tokens
+ * Budget Control Portal · Balas Technologies
+ *
+ * Primary: #00A1E4 (Balas brand blue)
+ * Nền trắng sạch, Apple-inspired bento grid aesthetic
+ */
+
+:root {
+    /* ─── Brand Colors ─────────────────────────────────────── */
+    --bento-primary: #00A1E4;
+    --bento-primary-hover: #0090CC;
+    --bento-primary-active: #007FB5;
+    --bento-primary-light: #E6F6FD;
+    --bento-primary-bg: #F0FAFF;
+
+    /* ─── Neutral / Background ─────────────────────────────── */
+    --bento-bg: #F5F5F7;
+    --bento-bg-card: #FFFFFF;
+    --bento-bg-elevated: #FFFFFF;
+    --bento-bg-sidebar: #FFFFFF;
+    --bento-bg-overlay: rgba(0, 0, 0, 0.4);
+
+    /* ─── Text ─────────────────────────────────────────────── */
+    --bento-text: #1D1D1F;
+    --bento-text-secondary: #6E6E73;
+    --bento-text-tertiary: #86868B;
+    --bento-text-placeholder: #AEAEB2;
+    --bento-text-inverse: #FFFFFF;
+
+    /* ─── Borders ──────────────────────────────────────────── */
+    --bento-border: #E5E5EA;
+    --bento-border-light: #F2F2F7;
+    --bento-border-focus: var(--bento-primary);
+
+    /* ─── Status Colors ────────────────────────────────────── */
+    --bento-success: #34C759;
+    --bento-success-bg: #F0FDF4;
+    --bento-warning: #FF9F0A;
+    --bento-warning-bg: #FFFBEB;
+    --bento-error: #FF3B30;
+    --bento-error-bg: #FEF2F2;
+    --bento-info: var(--bento-primary);
+    --bento-info-bg: var(--bento-primary-bg);
+
+    /* ─── Shadows (Soft Drop — NOT neumorphism) ────────────── */
+    --bento-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --bento-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --bento-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.03);
+    --bento-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.03);
+    --bento-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.06), 0 8px 10px rgba(0, 0, 0, 0.04);
+    --bento-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03);
+    --bento-shadow-card-hover: 0 8px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
+
+    /* ─── Border Radius ────────────────────────────────────── */
+    --bento-radius-xs: 6px;
+    --bento-radius-sm: 8px;
+    --bento-radius-md: 12px;
+    --bento-radius-lg: 16px;
+    --bento-radius-xl: 20px;
+    --bento-radius-2xl: 24px;
+    --bento-radius-full: 9999px;
+
+    /* ─── Spacing (4px scale) ──────────────────────────────── */
+    --bento-space-1: 4px;
+    --bento-space-2: 8px;
+    --bento-space-3: 12px;
+    --bento-space-4: 16px;
+    --bento-space-5: 20px;
+    --bento-space-6: 24px;
+    --bento-space-8: 32px;
+    --bento-space-10: 40px;
+    --bento-space-12: 48px;
+    --bento-space-16: 64px;
+
+    /* ─── Typography ───────────────────────────────────────── */
+    --bento-font: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --bento-font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+    --bento-text-xs: 12px;
+    --bento-text-sm: 13px;
+    --bento-text-base: 14px;
+    --bento-text-md: 15px;
+    --bento-text-lg: 16px;
+    --bento-text-xl: 18px;
+    --bento-text-2xl: 22px;
+    --bento-text-3xl: 28px;
+    --bento-text-4xl: 36px;
+    --bento-text-5xl: 48px;
+
+    --bento-leading-tight: 1.2;
+    --bento-leading-normal: 1.5;
+    --bento-leading-relaxed: 1.625;
+
+    --bento-weight-regular: 400;
+    --bento-weight-medium: 500;
+    --bento-weight-semibold: 600;
+    --bento-weight-bold: 700;
+
+    /* ─── Transitions ──────────────────────────────────────── */
+    --bento-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --bento-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --bento-duration-fast: 150ms;
+    --bento-duration-normal: 200ms;
+    --bento-duration-slow: 300ms;
+    --bento-duration-slower: 500ms;
+
+    /* ─── Layout ───────────────────────────────────────────── */
+    --bento-sidebar-width: 260px;
+    --bento-sidebar-collapsed: 72px;
+    --bento-topbar-height: 60px;
+    --bento-content-max-width: 1280px;
+
+    /* ─── Z-Index Layers ───────────────────────────────────── */
+    --bento-z-base: 0;
+    --bento-z-dropdown: 100;
+    --bento-z-sticky: 200;
+    --bento-z-sidebar: 300;
+    --bento-z-overlay: 400;
+    --bento-z-modal: 500;
+    --bento-z-toast: 600;
+}
+
+/* ─── Dark Mode ──────────────────────────────────────────── */
+[data-theme="dark"] {
+    --bento-bg: #1A1A1E;
+    --bento-bg-card: #2C2C30;
+    --bento-bg-elevated: #38383C;
+    --bento-bg-sidebar: #222226;
+    --bento-bg-overlay: rgba(0, 0, 0, 0.6);
+
+    --bento-text: #F5F5F7;
+    --bento-text-secondary: #A1A1A6;
+    --bento-text-tertiary: #8E8E93;
+    --bento-text-placeholder: #636366;
+    --bento-text-inverse: #1D1D1F;
+
+    --bento-border: #3A3A3C;
+    --bento-border-light: #2C2C2E;
+    --bento-border-focus: var(--bento-primary);
+
+    --bento-primary-light: rgba(0, 161, 228, 0.15);
+    --bento-primary-bg: rgba(0, 161, 228, 0.08);
+
+    --bento-success-bg: rgba(52, 199, 89, 0.12);
+    --bento-warning-bg: rgba(255, 159, 10, 0.12);
+    --bento-error-bg: rgba(255, 59, 48, 0.12);
+
+    --bento-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --bento-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --bento-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+    --bento-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+    --bento-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.35), 0 8px 10px rgba(0, 0, 0, 0.25);
+    --bento-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);
+    --bento-shadow-card-hover: 0 8px 25px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    color-scheme: dark;
+}

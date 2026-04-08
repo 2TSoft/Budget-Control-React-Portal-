@@ -1,0 +1,62 @@
+.card {
+    background: var(--bento-bg-card);
+    border-radius: var(--bento-radius-lg);
+    border: 1px solid var(--bento-border-light);
+    padding: var(--bento-space-5);
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+
+/* ─── Span ───────────────────────────────────────────────── */
+.span2 {
+    grid-column: span 2;
+}
+
+.rowSpan2 {
+    grid-row: span 2;
+}
+
+/* ─── Variants ───────────────────────────────────────────── */
+.variantDefault {
+    background: var(--bento-bg-card);
+}
+
+.variantPrimary {
+    background: linear-gradient(135deg, #00A1E4 0%, #0077B6 100%);
+    color: var(--bento-text-inverse);
+    border: none;
+}
+
+.variantPrimary h1,
+.variantPrimary h2,
+.variantPrimary h3,
+.variantPrimary h4,
+.variantPrimary p,
+.variantPrimary span {
+    color: var(--bento-text-inverse);
+}
+
+.variantAccent {
+    background: linear-gradient(135deg, var(--bento-primary-bg) 0%, #E6F6FD 100%);
+    border-color: rgba(0, 161, 228, 0.1);
+}
+
+.variantGlass {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Hoverable ──────────────────────────────────────────── */
+.hoverable {
+    cursor: pointer;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .span2 {
+        grid-column: span 1;
+    }
+}

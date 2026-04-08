@@ -1,0 +1,28 @@
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--bento-space-12) var(--bento-space-6);
+    text-align: center;
+    gap: var(--bento-space-4);
+}
+
+.icon {
+    font-size: 48px;
+    color: var(--bento-border);
+}
+
+.title {
+    font-size: var(--bento-text-lg);
+    font-weight: var(--bento-weight-semibold);
+    color: var(--bento-text);
+    margin: 0;
+}
+
+.description {
+    font-size: var(--bento-text-base);
+    color: var(--bento-text-secondary);
+    margin: 0;
+    max-width: 400px;
+}

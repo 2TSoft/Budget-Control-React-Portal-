@@ -1,0 +1,241 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--bento-space-4) var(--bento-space-3);
+    gap: var(--bento-space-2);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* ─── Logo ───────────────────────────────────────────────── */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-3);
+    padding: var(--bento-space-2) var(--bento-space-2);
+    margin-bottom: var(--bento-space-4);
+    min-height: 48px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.logoIcon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.logoTitle {
+    font-size: var(--bento-text-md);
+    font-weight: var(--bento-weight-bold);
+    color: var(--bento-text);
+    line-height: 1.2;
+}
+
+.logoSubtitle {
+    font-size: var(--bento-text-xs);
+    color: var(--bento-text-tertiary);
+    line-height: 1.3;
+}
+
+/* ─── Nav Group ──────────────────────────────────────────── */
+.navGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bento-space-1);
+}
+
+.navGroupLabel {
+    font-size: 11px;
+    font-weight: var(--bento-weight-semibold);
+    color: var(--bento-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--bento-space-2) var(--bento-space-3);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* ─── Nav Item ───────────────────────────────────────────── */
+.navItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-3);
+    padding: var(--bento-space-2) var(--bento-space-3);
+    border-radius: var(--bento-radius-sm);
+    color: var(--bento-text-secondary);
+    text-decoration: none;
+    font-size: var(--bento-text-base);
+    font-weight: var(--bento-weight-medium);
+    transition: background-color var(--bento-duration-fast) var(--bento-ease),
+        color var(--bento-duration-fast) var(--bento-ease);
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    min-height: 40px;
+}
+
+.navItem:hover {
+    background-color: var(--bento-bg);
+    color: var(--bento-text);
+}
+
+.navItemActive {
+    background-color: var(--bento-primary-light);
+    color: var(--bento-primary);
+    font-weight: var(--bento-weight-semibold);
+}
+
+.navItemActive:hover {
+    background-color: var(--bento-primary-light);
+    color: var(--bento-primary);
+}
+
+/* Active indicator bar */
+.activeIndicator {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background-color: var(--bento-primary);
+}
+
+.navIcon {
+    font-size: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.navLabel {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ─── Spacer ─────────────────────────────────────────────── */
+.spacer {
+    flex: 1;
+}
+
+/* ─── User Section (Bottom) ──────────────────────────────── */
+.userSection {
+    flex-shrink: 0;
+    padding-top: var(--bento-space-3);
+    border-top: 1px solid var(--bento-border-light);
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-3);
+    padding-left: var(--bento-space-3);
+    padding-right: var(--bento-space-3);
+    padding-bottom: var(--bento-space-1);
+    min-height: 48px;
+    overflow: hidden;
+}
+
+.userAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--bento-radius-full);
+    background-color: var(--bento-primary);
+    color: var(--bento-text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--bento-text-xs);
+    font-weight: var(--bento-weight-bold);
+    flex-shrink: 0;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+}
+
+.userName {
+    font-size: var(--bento-text-sm);
+    font-weight: var(--bento-weight-medium);
+    color: var(--bento-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userEmail {
+    font-size: 11px;
+    color: var(--bento-text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--bento-radius-sm);
+    border: none;
+    background: none;
+    color: var(--bento-text-tertiary);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--bento-duration-fast) var(--bento-ease),
+        color var(--bento-duration-fast) var(--bento-ease);
+}
+
+.logoutBtn:hover {
+    background-color: var(--bento-error-bg);
+    color: var(--bento-error);
+}
+
+/* ─── Collapsed State ────────────────────────────────────── */
+.collapsed .navGroupLabel,
+.collapsed .logoText,
+.collapsed .navLabel,
+.collapsed .userInfo {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.collapsed .navItem {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.collapsed .logo {
+    justify-content: center;
+}
+
+.collapsed .userSection {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.collapsed .logoutBtn {
+    display: none;
+}

@@ -16,6 +16,12 @@
 - **Project:** Budget Control Portal (powerpages-spa)
 - **Description:** React SPA quản lý Purchase Requisition & Budget Control, migrate từ Power Pages
 - **Phase 0 + 1 hoàn thành:** Foundation + Purchase Requisition CRUD + Approval Workflow
+- **Design System:** Bento UI (Apple-inspired), primary #00A1E4 (Balas blue), nền #F5F5F7, cards #FFFFFF
+- **Design System Location:** `src/shared/design-system/` — barrel export from `index.ts`
+- **CSS Strategy:** CSS Modules + CSS Custom Properties (zero runtime), tokens in `tokens.css`
+- **Animation:** Framer Motion, variants exported from `motion.ts`
+- **Layout:** AppShell (Sidebar 260px/72px collapsed + TopBar) for authenticated, LoginPage for unauthenticated
+- **Bento Components:** BentoGrid, BentoCard, BentoStat, BentoChart, BentoTable, BentoForm, StatusBadge, EmptyState, PageContainer
 - **Const object thay enum:** tsconfig có `erasableSyntaxOnly: true` → dùng `const X = {} as const` + `type X = (typeof X)[keyof typeof X]`
 - **API endpoint pattern:** Mỗi entity 1 const object (`entityApi`) với `list`, `get`, `create`, `update`, `delete` methods
 - **Hook naming:** Queries dùng `use + Noun` (usePRHeaders), Mutations dùng `use + Verb + Noun` (useCreatePR)

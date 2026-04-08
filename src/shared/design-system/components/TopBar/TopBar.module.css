@@ -1,0 +1,237 @@
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--bento-z-sticky);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--bento-topbar-height);
+    padding: 0 var(--bento-space-6);
+    border-bottom: 1px solid var(--bento-border-light);
+    backdrop-filter: blur(12px);
+    background-color: color-mix(in srgb, var(--bento-bg-card) 85%, transparent);
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-4);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-3);
+}
+
+/* Hamburger / Toggle */
+.toggleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    border-radius: var(--bento-radius-sm);
+    color: var(--bento-text-secondary);
+    cursor: pointer;
+    transition: background-color var(--bento-duration-fast) var(--bento-ease),
+        color var(--bento-duration-fast) var(--bento-ease);
+}
+
+.toggleBtn:hover {
+    background-color: var(--bento-bg);
+    color: var(--bento-text);
+}
+
+/* Theme toggle (dark/light) */
+.themeToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    border-radius: var(--bento-radius-sm);
+    color: var(--bento-text-secondary);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color var(--bento-duration-fast) var(--bento-ease),
+        color var(--bento-duration-fast) var(--bento-ease);
+}
+
+.themeToggle:hover {
+    background-color: var(--bento-bg);
+    color: var(--bento-text);
+}
+
+/* Breadcrumb placeholder */
+.breadcrumb {
+    font-size: var(--bento-text-sm);
+    color: var(--bento-text-tertiary);
+}
+
+.breadcrumbCurrent {
+    color: var(--bento-text);
+    font-weight: var(--bento-weight-medium);
+}
+
+/* ─── Avatar Button (TopBar) ─────────────────────────────── */
+.avatarBtn {
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-2);
+    padding: 4px 12px 4px 4px;
+    border: 1px solid var(--bento-border-light);
+    border-radius: var(--bento-radius-full);
+    background: var(--bento-bg-card);
+    cursor: pointer;
+    transition: border-color var(--bento-duration-fast) var(--bento-ease),
+        box-shadow var(--bento-duration-fast) var(--bento-ease);
+}
+
+.avatarBtn:hover {
+    border-color: var(--bento-border);
+    box-shadow: var(--bento-shadow-sm);
+}
+
+.avatarCircle {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--bento-radius-full);
+    background-color: var(--bento-primary);
+    color: var(--bento-text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: var(--bento-weight-bold);
+}
+
+.avatarName {
+    font-size: var(--bento-text-sm);
+    font-weight: var(--bento-weight-medium);
+    color: var(--bento-text);
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.avatarChevron {
+    color: var(--bento-text-tertiary);
+    transition: transform var(--bento-duration-fast) var(--bento-ease);
+    font-size: 10px;
+}
+
+.avatarChevronOpen {
+    transform: rotate(180deg);
+}
+
+/* ─── Dropdown ───────────────────────────────────────────── */
+.dropdownWrapper {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: var(--bento-bg-card);
+    border: 1px solid var(--bento-border-light);
+    border-radius: var(--bento-radius-md);
+    box-shadow: var(--bento-shadow-lg);
+    padding: var(--bento-space-2);
+    z-index: var(--bento-z-dropdown);
+}
+
+.dropdownHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-3);
+    padding: var(--bento-space-3);
+}
+
+.dropdownAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--bento-radius-full);
+    background-color: var(--bento-primary);
+    color: var(--bento-text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--bento-text-sm);
+    font-weight: var(--bento-weight-bold);
+    flex-shrink: 0;
+}
+
+.dropdownInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow: hidden;
+}
+
+.dropdownName {
+    font-size: var(--bento-text-base);
+    font-weight: var(--bento-weight-semibold);
+    color: var(--bento-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownEmail {
+    font-size: var(--bento-text-xs);
+    color: var(--bento-text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: var(--bento-border-light);
+    margin: var(--bento-space-1) var(--bento-space-2);
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: var(--bento-space-2);
+    width: 100%;
+    padding: var(--bento-space-2) var(--bento-space-3);
+    border: none;
+    background: none;
+    border-radius: var(--bento-radius-xs);
+    color: var(--bento-text-secondary);
+    font-size: var(--bento-text-sm);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color var(--bento-duration-fast) var(--bento-ease),
+        color var(--bento-duration-fast) var(--bento-ease);
+}
+
+.dropdownItem:hover {
+    background-color: var(--bento-bg);
+    color: var(--bento-text);
+}
+
+.dropdownItemDanger:hover {
+    background-color: var(--bento-error-bg);
+    color: var(--bento-error);
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        padding: 0 var(--bento-space-4);
+    }
+
+    .avatarName {
+        display: none;
+    }
+}

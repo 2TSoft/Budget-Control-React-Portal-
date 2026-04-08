@@ -1,0 +1,273 @@
+/**
+ * Bento Design System — Global Styles
+ * Body reset, typography, scrollbar, focus-visible, Ant Design overrides
+ */
+
+@import './tokens.css';
+
+/* ─── Reset & Base ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-synthesis: none;
+    text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--bento-font);
+    font-size: var(--bento-text-base);
+    line-height: var(--bento-leading-normal);
+    color: var(--bento-text);
+    background-color: var(--bento-bg);
+    min-height: 100vh;
+    min-width: 320px;
+}
+
+#root {
+    min-height: 100vh;
+    background-color: var(--bento-bg);
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--bento-text);
+    font-weight: var(--bento-weight-semibold);
+    line-height: var(--bento-leading-tight);
+}
+
+a {
+    color: var(--bento-primary);
+    text-decoration: none;
+    transition: color var(--bento-duration-fast) var(--bento-ease);
+}
+
+a:hover {
+    color: var(--bento-primary-hover);
+}
+
+/* ─── Focus Visible (Accessibility) ─────────────────────── */
+:focus-visible {
+    outline: 2px solid var(--bento-primary);
+    outline-offset: 2px;
+    border-radius: var(--bento-radius-xs);
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid var(--bento-primary);
+    outline-offset: 2px;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bento-border);
+    border-radius: var(--bento-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bento-text-tertiary);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bento-border) transparent;
+}
+
+/* ─── Selection ──────────────────────────────────────────── */
+::selection {
+    background-color: var(--bento-primary-light);
+    color: var(--bento-text);
+}
+
+/* ─── Ant Design Global Overrides ────────────────────────── */
+
+/* Button — clean flat style */
+.ant-btn {
+    border: 1px solid var(--bento-border) !important;
+    box-shadow: none !important;
+    transition: all var(--bento-duration-fast) var(--bento-ease) !important;
+    font-weight: var(--bento-weight-medium);
+}
+
+.ant-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--bento-shadow-sm) !important;
+}
+
+.ant-btn:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: none !important;
+}
+
+.ant-btn-primary {
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 161, 228, 0.25) !important;
+}
+
+.ant-btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(0, 161, 228, 0.35) !important;
+}
+
+.ant-btn-primary:active {
+    box-shadow: 0 1px 2px rgba(0, 161, 228, 0.2) !important;
+}
+
+/* Card — white with subtle shadow */
+.ant-card {
+    background: var(--bento-bg-card) !important;
+    border: 1px solid var(--bento-border-light) !important;
+    box-shadow: var(--bento-shadow-card) !important;
+    transition: box-shadow var(--bento-duration-normal) var(--bento-ease),
+        transform var(--bento-duration-normal) var(--bento-ease) !important;
+}
+
+/* Input / Select — clean border style */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker {
+    background-color: var(--bento-bg-card) !important;
+    border: 1px solid var(--bento-border) !important;
+    box-shadow: none !important;
+    transition: border-color var(--bento-duration-fast) var(--bento-ease),
+        box-shadow var(--bento-duration-fast) var(--bento-ease) !important;
+}
+
+.ant-input:focus,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused,
+.ant-select-selector:focus-within,
+.ant-picker-focused {
+    border-color: var(--bento-primary) !important;
+    box-shadow: 0 0 0 3px var(--bento-primary-light) !important;
+}
+
+/* Table — clean white */
+.ant-table {
+    background: transparent !important;
+}
+
+.ant-table-container {
+    background: var(--bento-bg-card);
+    border-radius: var(--bento-radius-lg) !important;
+    border: 1px solid var(--bento-border-light);
+    box-shadow: var(--bento-shadow-card) !important;
+    overflow: hidden;
+}
+
+.ant-table-thead>tr>th {
+    background-color: #FAFAFA !important;
+    border-bottom: 1px solid var(--bento-border) !important;
+    font-weight: var(--bento-weight-semibold);
+    color: var(--bento-text-secondary) !important;
+    font-size: var(--bento-text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.ant-table-tbody>tr>td {
+    border-bottom: 1px solid var(--bento-border-light) !important;
+}
+
+.ant-table-tbody>tr:hover>td {
+    background-color: var(--bento-bg) !important;
+}
+
+/* Modal */
+.ant-modal-content {
+    background: var(--bento-bg-card) !important;
+    border: none !important;
+    box-shadow: var(--bento-shadow-xl) !important;
+}
+
+/* Menu */
+.ant-menu {
+    background: transparent !important;
+    border: none !important;
+}
+
+.ant-menu-item {
+    border-radius: var(--bento-radius-sm) !important;
+    transition: all var(--bento-duration-fast) var(--bento-ease) !important;
+}
+
+.ant-menu-item:hover {
+    background-color: var(--bento-bg) !important;
+}
+
+.ant-menu-item-selected {
+    background-color: var(--bento-primary-light) !important;
+    color: var(--bento-primary) !important;
+    font-weight: var(--bento-weight-medium);
+}
+
+/* Tag */
+.ant-tag {
+    border: 1px solid var(--bento-border) !important;
+    box-shadow: none !important;
+    font-weight: var(--bento-weight-medium);
+}
+
+/* Notification / Message */
+.ant-notification-notice,
+.ant-message-notice-content {
+    background: var(--bento-bg-card) !important;
+    box-shadow: var(--bento-shadow-lg) !important;
+    border: 1px solid var(--bento-border-light) !important;
+}
+
+/* Pagination */
+.ant-pagination-item {
+    border: 1px solid var(--bento-border) !important;
+    box-shadow: none !important;
+    transition: all var(--bento-duration-fast) var(--bento-ease) !important;
+}
+
+.ant-pagination-item-active {
+    border-color: var(--bento-primary) !important;
+    background-color: var(--bento-primary-bg) !important;
+}
+
+.ant-pagination-item-active a {
+    color: var(--bento-primary) !important;
+}
+
+/* Alert */
+.ant-alert {
+    border: 1px solid var(--bento-border-light) !important;
+    box-shadow: none !important;
+}
+
+/* Steps */
+.ant-steps-item-icon {
+    box-shadow: none !important;
+}
+
+/* Drawer */
+.ant-drawer-content {
+    background: var(--bento-bg-card) !important;
+}

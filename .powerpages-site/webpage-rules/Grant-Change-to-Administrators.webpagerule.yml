@@ -1,0 +1,6 @@
+id: 978db408-3f72-425b-a134-cf10320cd34f
+name: Grant Change to Administrators
+right: 1
+adx_webpageaccesscontrolrule_webrole:
+- 0c1893ec-d479-4ea1-b98d-94291d818c93
+webpageid: c97f4f90-6c43-4ae5-910d-1d7fe050b8de

@@ -1,1 +1,18 @@
-{}
+adx_webfile:
+- RecordId: 63ba5b9f-a9a4-4592-8af2-d10b081daae4
+  DisplayName: index-DkOyG-6Y.js
+  CheckSum: 
+  IsDeleted: true
+- RecordId: 90fa5ce8-b0a3-4b67-8a3b-71bac4c3c8ed
+  DisplayName: index-CJTz1Ej1.js
+  CheckSum: 
+  IsDeleted: true
+- RecordId: eaf22ecd-1a6d-4ab6-8ead-0e3faccb19fc
+  DisplayName: index-gI-RsH0V.css
+  CheckSum: 
+  IsDeleted: true
+annotation:
+- RecordId: eaf22ecd-1a6d-4ab6-8ead-0e3faccb19fc
+  DisplayName: index-gI-RsH0V.css
+  CheckSum: 
+  IsDeleted: true
